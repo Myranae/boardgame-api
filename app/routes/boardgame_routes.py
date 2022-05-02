@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, abort, request, make_response
 from app import db
+from ..models.boardgame import Boardgame
 
 bp = Blueprint("boardgames", __name__, url_prefix="/boardgames")
 
@@ -14,17 +15,17 @@ def create_boardgame():
 
     return jsonify(boardgame.to_dict()), 201
     
-# GET /cats
-
+# GET /boardgames
 @bp.route("", methods=("GET",))
 def index_games():
-    cats = Boardgames.query.all()
+    boardgames = Boardgame.query.all()
 
-    result_list = [cat.to_dict() for cat in cats]
+    result_list = [boardgame.to_dict() for boardgame in boardgames]
 
     return jsonify(result_list)
 
 def validate_boardgame(id):
+    boardgames = Boardgame.query.all()
     try:
         id = int(id)
     except ValueError:
@@ -32,8 +33,8 @@ def validate_boardgame(id):
 
     for game in boardgames:
         if game.id == id:
-            # return the cat
-            return cat
+            # return the game
+            return game
 
-    # no cat found
-    abort(make_response(jsonify(dict(details=f"cat id {id} not found")), 404)) 
+    # no game found
+    abort(make_response(jsonify(dict(details=f"boardgame id {id} not found")), 404)) 
