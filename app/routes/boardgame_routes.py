@@ -5,14 +5,14 @@ bp = Blueprint("boardgames", __name__, url_prefix="/boardgames")
 
 # POST /boardgames
 @bp.route("", methods=("POST",))
-def create_cat():
+def create_boardgame():
     request_body = request.get_json()
-    cat = validate_boardgame(request_body)
+    boardgame = validate_boardgame(request_body)
 
-    db.session.add(cat)
+    db.session.add(boardgame)
     db.session.commit()
 
-    return jsonify(cat.to_dict()), 201
+    return jsonify(boardgame.to_dict()), 201
     
 # GET /cats
 
