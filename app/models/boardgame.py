@@ -17,3 +17,13 @@ class Boardgame(db.Model):
             producer = self.producer,
             genre = self.genre,
         )
+
+    @classmethod
+    def from_dict(cls, data_dict):
+        return cls(
+            name=data_dict["name"],
+            # creator=data_dict["creator"],
+            # length=data_dict["length"],
+            # producer=data_dict["producer"],
+            # genre=data_dict["genre"],
+        )
